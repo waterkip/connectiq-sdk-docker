@@ -1,4 +1,0 @@
-#!/bin/sh
-wget -qO- https://developer.garmin.com/downloads/connect-iq/sdks/sdks.json \
-| jq -r '.[] | .version' \
-| sort -rV

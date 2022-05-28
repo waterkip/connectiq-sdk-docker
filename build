@@ -1,10 +1,18 @@
 #!/bin/sh
-[ -z "${CIQ_SDK_VERSION}" ] && echo 'ERROR: Missing CIQ_SDK_VERSION environment variable' && exit 1
-exec docker build \
-  --file=Dockerfile \
-  --tag=local/connectiq-sdk:${CIQ_SDK_VERSION} \
-  --build-arg CIQ_SDK_VERSION=${CIQ_SDK_VERSION} \
+#
+# SPDX-FileCopyrightText: 2022 Wesley Schwengle <wesley@opperschaap.net>
+#
+# SPDX-License-Identifier: Unlicense
+#
+
+if [ echo "$@" | egrep -vq -- '-t|--tag' ]
+then
+    ARGS="-t connectiq-sdk:latest"
+fi
+
+docker build \
+  --tag=connectiq-sdk:latest \
   --build-arg CIQ_SDK_UID=$(id -u) \
   --build-arg CIQ_SDK_GID=$(id -g) \
-  --build-arg EULA_ACCEPT_MSCOREFONTS=${EULA_ACCEPT_MSCOREFONTS:-false} \
+  $@ \
   .

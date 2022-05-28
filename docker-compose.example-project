@@ -1,0 +1,20 @@
+#
+# SPDX-FileCopyrightText: 2021-2022 Wesley Schwengle <wesley@opperschaap.net>
+#
+# SPDX-License-Identifier: Unlicense
+#
+version: '3.6'
+services:
+  connectiq:
+    image: connectiq-sdk:latest
+    volumes:
+      - /tmp/.X11-unix:/tmp/.X11-unix
+      - $HOME/.Xauthority:/home/ciq/.Xauthority:ro
+      - $HOME/.Garmin/ConnectIQ:/home/ciq/.Garmin/ConnectIQ
+      - ./:/home/ciq/src
+    environment:
+      DISPLAY: $DISPLAY
+      XAUTHORITY: /home/ciq/.Xauthority
+
+networks:
+  default:

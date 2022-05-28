@@ -1,0 +1,35 @@
+#
+# SPDX-FileCopyrightText: 2022 Wesley Schwengle <wesley@opperschaap.net>
+#
+# SPDX-License-Identifier: Unlicense
+#
+version: '3.6'
+services:
+  reuse:
+    image: fsfe/reuse:latest
+    command:
+      - lint
+    volumes:
+      - ./:/data
+
+  connectiq:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: sdk
+      args:
+        CIQ_SDK_UID: $CIQ_SDK_UID
+        CIQ_SDK_GID: $CIQ_SDK_GID
+    environment:
+      DISPLAY: $DISPLAY
+      XAUTHORITY: /home/ciq/.Xauthority
+    volumes:
+      - /tmp/.X11-unix:/tmp/.X11-unix
+      - $HOME/.Xauthority:/home/ciq/.Xauthority:ro
+      - $HOME/.Garmin/ConnectIQ:/home/ciq/.Garmin/ConnectIQ
+      - ./:/home/ciq/src
+    command:
+      - bash
+
+networks:
+  default:
