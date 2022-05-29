@@ -70,6 +70,8 @@ RUN \
        mesa-utils \
        libnvidia-gl-470 \
        ttf-mscorefonts-installer \
+       libgtk-3-0 \
+       libwebkit2gtk-4.0-37 \
     && apt-get clean
 
 # User/group
