@@ -56,7 +56,6 @@ RUN apt-get update --quiet \
        libcurl4 \
        libexpat1 \
        libfontconfig1 \
-       libfontconfig1 \
        libfreetype6 \
        libgdk-pixbuf2.0-0 \
        libglib2.0-0 \
