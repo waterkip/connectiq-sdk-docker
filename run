@@ -2,6 +2,9 @@
 [ -z "${CIQ_SDK_VERSION}" ] && echo 'ERROR: Missing CIQ_SDK_VERSION environment variable' && exit 1
 [ -z "${CIQ_SDK_DIR}" ] && CIQ_SDK_DIR="${HOME}/.Garmin/ConnectIQ"
 [ -z "${XAUTHORITY}" ] && XAUTHORITY="${HOME}/.Xauthority"
+
+[ ! -d "$CIQ_SDK_DIR" ] && mkdir -p "$CIQ_SDK_DIR";
+
 exec docker run \
   --name=connectiq-sdk \
   --privileged \
