@@ -1,0 +1,110 @@
+## ConnectIQ resources
+
+ifndef MY_JUNGLES
+MY_JUNGLES := ${HOME}/src/monkey.jungle
+endif
+
+# SDK root path
+ifndef CIQ_ROOT
+CIQ_ROOT := $(shell cat ${HOME}/.Garmin/ConnectIQ/current-sdk.cfg)
+endif
+
+# Monkey C compiler
+ifndef CIQ_MONKEYC
+CIQ_MONKEYC := ${CIQ_ROOT}/bin/monkeyc
+endif
+
+# Simulator
+ifndef CIQ_SIMULATOR
+CIQ_SIMULATOR := ${CIQ_ROOT}/bin/simulator
+endif
+
+# Simulation launcher
+ifndef CIQ_MONKEYDO
+CIQ_MONKEYDO := ${CIQ_ROOT}/bin/monkeydo
+endif
+
+# FIT-file viewer
+ifndef CIQ_MONKEYGRAPH
+CIQ_MONKEYGRAPH := ${CIQ_ROOT}/bin/fit-graph.jar
+endif
+
+# Target API version
+ifndef CIQ_API
+CIQ_API := 1.0.0
+endif
+
+ifndef CIQ_TYPECHECK
+CIQ_TYPECHECK=2
+endif
+
+# Developer key
+ifndef CIQ_DEVKEY
+CIQ_DEVKEY := ${HOME}/.Garmin/ConnectIQ/developer.der
+endif
+
+# FIT-file
+ifndef CIQ_FITFILE
+CIQ_FITFILE := ${HOME}/src/.session.fit
+endif
+
+
+## Build environment (verify)
+
+# SDK root path
+${CIQ_ROOT}:
+	$(error Invalid SDK root path; CIQ_ROOT=${CIQ_ROOT})
+
+# Monkey C compiler
+${CIQ_MONKEYC}: | ${CIQ_ROOT}
+	$(error Invalid Monkey C compiler path; CIQ_MONKEYC=${CIQ_MONKEYC})
+
+# Simulator
+${CIQ_SIMULATOR}: | ${CIQ_ROOT}
+	$(error Invalid simulator path; CIQ_SIMULATOR=${CIQ_SIMULATOR})
+
+# Simulation launcher
+${CIQ_MONKEYDO}: | ${CIQ_ROOT}
+	$(error Invalid simulation launcher path; CIQ_MONKEYDO=${CIQ_MONKEYDO})
+
+# FIT-file viewer
+${CIQ_MONKEYGRAPH}: | ${CIQ_ROOT}
+	$(error Invalid FIT-file viewer path; CIQ_MONKEYGRAPH=${CIQ_MONKEYGRAPH})
+
+# Developer key
+${CIQ_DEVKEY}:
+
+# FIT-file
+${CIQ_FITFILE}:
+	$(error Invalid FIT-file; CIQ_FITFILE=${CIQ_FITFILE})
+
+
+## Helpers
+
+
+# Devices
+.PHONY: ciq-devices
+ciq-devices:
+	@find ${HOME}/.Garmin/ConnectIQ/Devices/ -maxdepth 2 -name compiler.json \
+	| sort \
+	| while read -r device; do \
+	  jq -r '.deviceId+" "+ .deviceFamily+" "+(.appTypes[]|select(.type=="watchApp")|.memoryLimit|tostring)+" "+(.partNumbers[]|(.connectIQVersion+" ("+.number+")"))' "$${device}" \
+	; done
+
+# Help
+.PHONY: ciq-help
+ciq-help:
+	@echo 'ConnectIQ targets:'
+	@echo '  ciq-help      - display this help message'
+	@echo '  ciq-devices   - list available target devices'
+	@echo 'Environment (variables):'
+	@echo '  CIQ_ROOT        = ${CIQ_ROOT}'
+	@echo '  CIQ_MONKEYC     = ${CIQ_MONKEYC}'
+	@echo '  CIQ_SIMULATOR   = ${CIQ_SIMULATOR}'
+	@echo '  CIQ_MONKEYDO    = ${CIQ_MONKEYDO}'
+	@echo '  CIQ_MONKEYGRAPH = ${CIQ_MONKEYGRAPH}'
+	@echo '  CIQ_API         = ${CIQ_API}'
+	@echo '  CIQ_DEVICE      = ${CIQ_DEVICE}'
+	@echo '  CIQ_DEVKEY      = ${CIQ_DEVKEY}'
+	@echo '  CIQ_FITFILE     = ${CIQ_FITFILE}'
+	@echo '  CIQ_TYPECHECK   = ${CIQ_TYPECHECK}'

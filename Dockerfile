@@ -69,6 +69,9 @@ RUN apt-get update --quiet \
        libusb-1.0-0 \
        libwebkitgtk-1.0-0 \
        openjdk-8-jdk \
+       # developer env
+       make \
+       jq \
     && apt-get clean \
     && rm -rf /var/cache/apt/* /var/lib/apt/lists/* \
     # User/group
@@ -91,6 +94,7 @@ RUN apt-get update --quiet \
 
 # ConnectIQ SDK manager
 COPY --from=installer /opt/connectiq-sdk-manager-linux /opt/connectiq-sdk-manager-linux
+COPY Makefile.* /etc/garmin-connectiq/
 
 CMD /bin/bash
 
@@ -98,19 +102,19 @@ USER _ciq
 WORKDIR /home/ciq/src
 
 # Font editor
-FROM sdk as hiero
-
-USER root
-RUN echo "ttf-mscorefonts-installer msttcorefonts/accepted-mscorefonts-eula boolean ${EULA_ACCEPT_MSCOREFONTS}" | debconf-set-selections \
-    && apt-get update -q \
-    && apt-get install --no-install-recommends -y \
-       make \
-       tzdata \
-       x11-xserver-utils \
-       mesa-utils \
-       libnvidia-gl-460 \
-       ttf-mscorefonts-installer \
-    && apt-get clean \
-    && rm -rf /var/cache/apt/* /var/lib/apt/lists/*
-
-USER _ciq
+#FROM sdk as hiero
+#
+#USER root
+#RUN echo "ttf-mscorefonts-installer msttcorefonts/accepted-mscorefonts-eula boolean ${EULA_ACCEPT_MSCOREFONTS}" | debconf-set-selections \
+#    && apt-get update -q \
+#    && apt-get install --no-install-recommends -y \
+#       make \
+#       tzdata \
+#       x11-xserver-utils \
+#       mesa-utils \
+#       libnvidia-gl-460 \
+#       ttf-mscorefonts-installer \
+#    && apt-get clean \
+#    && rm -rf /var/cache/apt/* /var/lib/apt/lists/*
+#
+#USER _ciq

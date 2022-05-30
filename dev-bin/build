@@ -1,20 +1,19 @@
-#!/bin/sh
+#!/bin/bash
 #
 # SPDX-FileCopyrightText: 2022 Wesley Schwengle <wesley@opperschaap.net>
 #
 # SPDX-License-Identifier: Unlicense
 #
+set -x
 
 mkdir -p $HOME/.Garmin/ConnectIQ
 
-if [ echo "$@" | egrep -vq -- '-t|--tag' ]
-then
-    ARGS="-t connectiq-sdk:latest"
-fi
+echo "$@" | grep -Eq -- "-t|--tags"
+[ $? -ne 0 ] && ARGS="-t connectiq-sdk:latest"
 
 docker build \
-  --tag=connectiq-sdk:latest \
   --build-arg CIQ_SDK_UID=$(id -u) \
   --build-arg CIQ_SDK_GID=$(id -g) \
+  $ARGS \
   $@ \
   .

@@ -11,23 +11,25 @@ Ubuntu Bionic to satisfy its dependencies.
 This project DOES NOT distribute the SDK or the SDK manager, you therefore are
 not in violation of the Garmin EULA.
 
-## .Garmin/ConnectIQ
+## Generate a developer key
 
-Please make sure you create the following directory in your $HOME.
-
-```
-mkdir -p $HOME/.Garmin/ConnectIQ
-```
+By using `./dev-bin/developer-key.sh` you can generate a developer key.
 
 ## Building
 
-You can run `./build` to trigger a docker build.
+You can run `./dev-bin/build` to trigger a docker build.
 
 ## docker-compose
 
 This project can also build the image via docker-compose, simply run
 `docker-compose build`. It will also check if all the files have a correct
-license.
+license. If your user has a differnt uid and gid than 1000, please make sure
+you have a .env file which tells docker-compose the correct UID/GID:
+
+```
+CIQ_SDK_UID=1002 # id -u
+CIQ_SDK_GID=1002 # id -g
+```
 
 In `docker-compose.example-project` you'll find an example docker-compose.yml
 file which you can use in your ConnectIQ project.
@@ -35,6 +37,29 @@ file which you can use in your ConnectIQ project.
 ## SDK manager
 
 You can start the SDK manager by typing `sdkmanager`.
+
+## Running this in a project
+
+Once you have downloaded the SDK and devices you can use `make` to issue
+particular actions in your project. Just typing make will show you a help:
+
+```
+docker-compose run --rm connectiq
+make
+
+# The following options are probably mostly used:
+
+make test
+make debug
+make release
+make run-debug
+make run-release
+make iq
+
+# You can find out more information about the ciq devices you have by running:
+make ciq-devices
+
+```
 
 # Thank you
 
