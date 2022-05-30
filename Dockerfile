@@ -1,7 +1,10 @@
 #
 # SPDX-FileCopyrightText: 2022 Wesley Schwengle <wesley@opperschaap.net>
 #
-# SPDX-License-Identifier: BSD-3-Clause
+# SPDX-License-Identifier: Unlicense
+#
+# The exception is that you CANNOT distribute the resulting image. See the
+# README.md for more information
 #
 ## Installer
 FROM ubuntu:focal AS installer

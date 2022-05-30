@@ -1,7 +1,7 @@
 #
 # SPDX-FileCopyrightText: 2022 Wesley Schwengle <wesley@opperschaap.net>
 #
-# SPDX-License-Identifier: BSD-3-Clause
+# SPDX-License-Identifier: Unlicense
 #
 
 image: docker:stable
