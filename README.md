@@ -46,9 +46,8 @@ repository has used as a base.
 
 This project uses Unlicense to respect the fork's license which was[^3]:
 
-    All the stuff contained is this repository is entirely free and may be
-    used, copied, modified, distributed and what-so-ever without any
-    constraint.
+> All the stuff contained is this repository is entirely free and may be used,
+> copied, modified, distributed and what-so-ever without any constraint.
 
 The only difference is that this project feels that it cannot properly use the
 Unlicense license for the Dockerfile itself. As Unlicense states that you can
