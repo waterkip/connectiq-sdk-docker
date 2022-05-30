@@ -1,3 +1,8 @@
+#
+# SPDX-FileCopyrightText: 2022 Wesley Schwengle <wesley@opperschaap.net>
+#
+# SPDX-License-Identifier: Unlicense
+#
 KEY_DIR="$HOME/.Garmin/ConnectIQ"
 mkdir -p "$KEY_DIR"
 
