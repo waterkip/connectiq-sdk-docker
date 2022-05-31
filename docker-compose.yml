@@ -23,10 +23,6 @@ services:
     environment:
       DISPLAY: $DISPLAY
       XAUTHORITY: /home/ciq/.Xauthority
-      CIQ_DEVICE: Your device
-      MY_PROJECT: Your project name
-      CIQ_API: 1.0.0
-      CIQ_TYPECHECK: 0
     volumes:
       - /tmp/.X11-unix:/tmp/.X11-unix
       - $HOME/.Xauthority:/home/ciq/.Xauthority:ro

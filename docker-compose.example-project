@@ -15,6 +15,10 @@ services:
     environment:
       DISPLAY: $DISPLAY
       XAUTHORITY: /home/ciq/.Xauthority
+      CIQ_DEVICE: DEVICE_ID # fenix6
+      MY_PROJECT: YourProject
+      CIQ_API: 3.2.6
+      CIQ_TYPECHECK: 0
 
 networks:
   default:
