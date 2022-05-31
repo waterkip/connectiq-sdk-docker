@@ -96,6 +96,7 @@ RUN apt-get update --quiet \
 # ConnectIQ SDK manager
 COPY --from=installer /opt/connectiq-sdk-manager-linux /opt/connectiq-sdk-manager-linux
 COPY Makefile.* /etc/garmin-connectiq/
+COPY bash-alias /home/ciq/.bash_aliases
 
 CMD /bin/bash
 
