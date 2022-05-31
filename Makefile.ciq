@@ -109,24 +109,24 @@ fit-view: ${OUTPUT_IQ} ${CIQ_FITFILE} | ${CIQ_MONKEYGRAPH}
 ## (Un-)Install
 
 # mountpoint
-${DESTDIR}/Garmin/Apps:
+${DESTDIR}:
 	$(error Garmin device not found; DESTDIR=${DESTDIR})
 
 # install
 .PHONY: install
-install: ${OUTPUT_RELEASE} | ${DESTDIR}/Garmin/Apps
-	@cp -v ${OUTPUT_RELEASE} ${DESTDIR}/Garmin/Apps/${MY_PROJECT}.prg
+install: ${OUTPUT_RELEASE} | ${DESTDIR}
+	@cp -v ${OUTPUT_RELEASE} ${DESTDIR}/${MY_PROJECT}.prg
 
 # uninstall
 .PHONY: uninstall
-uninstall: | ${DESTDIR}/Garmin/Apps
-	@rm -fv ${DESTDIR}/Garmin/Apps/${MY_PROJECT}.prg \
-	  ${DESTDIR}/Garmin/Apps/SETTINGS/${MY_PROJECT}.SET \
-	  ${DESTDIR}/Garmin/Apps/DATA/${MY_PROJECT}.STR \
-	  ${DESTDIR}/Garmin/Apps/DATA/${MY_PROJECT}.IDX \
-	  ${DESTDIR}/Garmin/Apps/DATA/${MY_PROJECT}.DAT \
-	  ${DESTDIR}/Garmin/Apps/LOGS/${MY_PROJECT}.TXT \
-	  ${DESTDIR}/Garmin/Apps/LOGS/${MY_PROJECT}.BAK
+uninstall: | ${DESTDIR}
+	@rm -fv ${DESTDIR}/${MY_PROJECT}.prg \
+	  ${DESTDIR}/SETTINGS/${MY_PROJECT}.SET \
+	  ${DESTDIR}/DATA/${MY_PROJECT}.STR \
+	  ${DESTDIR}/DATA/${MY_PROJECT}.IDX \
+	  ${DESTDIR}/DATA/${MY_PROJECT}.DAT \
+	  ${DESTDIR}/LOGS/${MY_PROJECT}.TXT \
+	  ${DESTDIR}/LOGS/${MY_PROJECT}.BAK
 
 
 ## Clean
