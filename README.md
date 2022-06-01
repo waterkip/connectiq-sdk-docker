@@ -2,50 +2,89 @@ Containerized ConnectIQ Development Environment for Linux
 ==
 
 This is a repository were we build and maintain a development environment where
-you can use Garmin SDK's on Linux. Because the Linux SDK (manager) uses
-completely outdated software[^1][^2] this Docker development environment uses
-Ubuntu Bionic to satisfy its dependencies.
+you can use Garmin SDK's on Linux.
 
-## EULA of Garmin
+## Why this project?
 
-This project DOES NOT distribute the SDK or the SDK manager, you therefore are
-not in violation of the Garmin EULA.
+Because the Linux SDK (manager) uses completely outdated software[^1][^2] this
+Docker development environment uses Ubuntu LTS to satisfy its dependencies. It
+appears that Garmin uses Ubuntu LTS for to develop its SDK on which contains
+some older software packages. For the SDK (manager) it seems that libjpeg.so.8
+is required which cannot be found on other distro's than Ubuntu LTS. It would
+be nice if Garmin starts using libjpeg9.
 
-## Generate a developer key
+## Setting up your development environment
 
-By using `./dev-bin/developer-key.sh` you can generate a developer key.
+First start by making sure you have
+[Docker](https://docs.docker.com/get-docker/) and
+[docker-compose](https://docs.docker.com/compose/install/) installed on your
+machine.
 
-## Building
-
-You can run `./dev-bin/build` to trigger a docker build.
-
-## docker-compose
-
-This project can also build the image via docker-compose, simply run
-`docker-compose build`. It will also check if all the files have a correct
-license. If your user has a differnt uid and gid than 1000, please make sure
-you have a .env file which tells docker-compose the correct UID/GID:
+The next step is to create a developer key if you don't have one already:
 
 ```
-CIQ_SDK_UID=1002 # id -u
-CIQ_SDK_GID=1002 # id -g
+./dev-bin/developer-key.sh
 ```
+
+Now build the docker image:
+
+```
+./dev-bin/build.sh
+```
+
+You know have a docker image called `connectiq-sdk:latest`.
 
 In `docker-compose.example-project` you'll find an example docker-compose.yml
 file which you can use in your ConnectIQ project.
 
-## SDK manager
+You can control your project with a very simple Makefile:
 
-You can start the SDK manager by typing `sdkmanager`.
+```
+include /etc/garmin-connectiq/Makefile.ciq
 
-## Running this in a project
+MY_PROJECT := YourProject
+```
 
-Once you have downloaded the SDK and devices you can use `make` to issue
-particular actions in your project. Just typing make will show you a help:
+You could add more variables in this Makefile or you add it to the
+docker-compose.yml environment block:
+
+```
+MY_JUNGLES: /path/to/monkey.jungle # defaults to ${HOME}/src/monkey.jungle
+
+CIQ_API: 3.2.6 # defaults to 1.0.0
+CIQ_TYPECHECK: 0 # defaults to 2
+CIQ_DEVKEY: /path/to/developer.der # defaults to ${HOME}/.Garmin/ConnectIQ/developer.der
+CIT_FITFILE: /path/to/fitfile # defaults to ${HOME}/src/.session.fit
+
+# used for make install and make uninstall
+DESTDIR: /path/to/garmin-device/Garmin/Apps
+```
+
+If you running on a multi-user system and someone else has build the image,
+please make sure that you tell docker-compose that you have the correct
+UID/GID:
+
+```
+$ cat > .env <<OEF
+CIQ_SDK_UID=$(id -u)
+CIQ_SDK_GID=$(id -g)
+OEF
+```
+
+Now you can run `docker-compose up --no-start` to create the container and
+continue with `docker-compose run --rm connectiqi sdkmanager` to enter the
+container and download the SDK and the devices you want to support with your
+app.
+
+After you have downloaded the SDK and the devices you can start developing.
+
+Once you think you have enough code you can enter your container and issue
+commands via `make`:
 
 ```
 docker-compose run --rm connectiq
 make
+# This shows a help
 
 # The following options are probably mostly used:
 
@@ -58,8 +97,13 @@ make iq
 
 # You can find out more information about the ciq devices you have by running:
 make ciq-devices
-
 ```
+
+## docker-compose
+
+This project can also build the image via docker-compose, simply run
+`docker-compose build`. Because this is mainly used for development it also
+includes a reuse license check service.
 
 # Thank you
 
@@ -88,6 +132,11 @@ isn't a FOSS license that excludes the binary form:
 
 You cannot redistribute the resulting Docker image due to Garmin's EULA and its
 closed source character.
+
+## EULA of Garmin
+
+This project DOES NOT distribute the SDK or the SDK manager, you therefore are
+not in violation of the Garmin EULA.
 
 # See also
 
