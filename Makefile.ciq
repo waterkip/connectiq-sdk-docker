@@ -33,20 +33,7 @@ help:
 
 
 ## Build
-
-# debug
-OUTPUT_DEBUG := ./bin/${MY_PROJECT}.debug.prg
-${OUTPUT_DEBUG}: ${MY_MANIFEST} ${MY_RESOURCES} ${MY_SOURCES} | ${CIQ_MONKEYC} ${CIQ_DEVKEY}
-	mkdir -p bin
-	${CIQ_MONKEYC} -w -l ${CIQ_TYPECHECK} \
-	  -o $@ \
-	  -d ${CIQ_DEVICE} \
-	  -c ${CIQ_API} \
-	  -y ${CIQ_DEVKEY} \
-	  -f ${MY_JUNGLES}
-debug: ${OUTPUT_DEBUG}
-
-OUTPUT_TEST := ./bin/${MY_PROJECT}.test.prg
+OUTPUT_TEST := ./bin/${CIQ_DEVICE}-${MY_PROJECT}-${CIQ_API}.test.prg
 ${OUTPUT_TEST}: ${MY_MANIFEST} ${MY_RESOURCES} ${MY_SOURCES} | ${CIQ_MONKEYC} ${CIQ_DEVKEY}
 	mkdir -p bin
 	${CIQ_MONKEYC} -w -l ${CIQ_TYPECHECK} \
@@ -58,9 +45,20 @@ ${OUTPUT_TEST}: ${MY_MANIFEST} ${MY_RESOURCES} ${MY_SOURCES} | ${CIQ_MONKEYC} ${
 	  -t
 test: ${OUTPUT_TEST}
 
+# debug
+OUTPUT_DEBUG := ./bin/${CIQ_DEVICE}-${MY_PROJECT}-${CIQ_API}.debug.prg
+${OUTPUT_DEBUG}: ${MY_MANIFEST} ${MY_RESOURCES} ${MY_SOURCES} | ${CIQ_MONKEYC} ${CIQ_DEVKEY}
+	mkdir -p bin
+	${CIQ_MONKEYC} -w -l ${CIQ_TYPECHECK} \
+	  -o $@ \
+	  -d ${CIQ_DEVICE} \
+	  -c ${CIQ_API} \
+	  -y ${CIQ_DEVKEY} \
+	  -f ${MY_JUNGLES}
+debug: ${OUTPUT_DEBUG}
 
 # release
-OUTPUT_RELEASE := ./bin/${MY_PROJECT}.prg
+OUTPUT_RELEASE := ./bin/${CIQ_DEVICE}-${MY_PROJECT}-${CIQ_API}.release.prg
 ${OUTPUT_RELEASE}: ${MY_MANIFEST} ${MY_RESOURCES} ${MY_SOURCES} | ${CIQ_MONKEYC} ${CIQ_DEVKEY}
 	mkdir -p bin
 	${CIQ_MONKEYC} -w -l ${CIQ_TYPECHECK} -r \
@@ -80,7 +78,6 @@ ${OUTPUT_IQ}: ${MY_MANIFEST} ${MY_RESOURCES} ${MY_SOURCES} | ${CIQ_MONKEYC} ${CI
 	  -y ${CIQ_DEVKEY} \
 	  -f ${MY_JUNGLES}
 iq: ${OUTPUT_IQ}
-
 
 ## Simulator
 .PHONY: run-debug
