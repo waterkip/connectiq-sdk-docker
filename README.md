@@ -95,7 +95,8 @@ make run-debug
 make run-release
 make iq
 
-# You can find out more information about the ciq devices you have by running:
+# You can find out more information about the ciq devices you have
+# by running:
 make ciq-devices
 ```
 
@@ -108,8 +109,8 @@ includes a reuse license check service.
 # Thank you
 
 I want to thank [Cédric Dufour](https://github.com/cedric-dufour) for his
-[Connect IQ docker work](https://github.com/cedric-dufour/connectiq-sdk-docker) which this
-repository has used as a base.
+[Connect IQ docker work](https://github.com/cedric-dufour/connectiq-sdk-docker)
+which this repository has used as a base.
 
 # LICENSE
 
