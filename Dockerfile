@@ -8,7 +8,7 @@
 # README.md for more information
 #
 ## Installer
-FROM ubuntu:focal AS installer
+FROM ubuntu:jammy AS installer
 
 ENV CIQ_SDK_DOWNLOAD_URL="https://developer.garmin.com/downloads/connect-iq"
 ENV CIQ_SDK_MANAGER_DIR_URL="${CIQ_SDK_DOWNLOAD_URL}/sdk-manager"
@@ -19,18 +19,18 @@ RUN apt-get update --quiet \
     && apt-get install --no-install-recommends --yes \
        ca-certificates \
        jq \
-       wget \
+       curl \
        unzip
 RUN \
-    export CIQ_SDK_MANAGER_URL="${CIQ_SDK_MANAGER_DIR_URL}/$(wget -qO- "${CIQ_SDK_MANAGER_LIST_URL}" | jq -r '.linux')" \
-    && wget --progress=bar "${CIQ_SDK_MANAGER_URL}" -O "/connectiq-sdk-manager-linux.zip" \
+    export CIQ_SDK_MANAGER_URL="${CIQ_SDK_MANAGER_DIR_URL}/$(curl -s "${CIQ_SDK_MANAGER_LIST_URL}" | jq -r '.linux')" \
+    && curl -s -L "${CIQ_SDK_MANAGER_URL}" -o "/connectiq-sdk-manager-linux.zip" \
     && mkdir -p "/opt/connectiq-sdk-manager-linux" \
     && cd "/opt/connectiq-sdk-manager-linux" \
-    && unzip "/connectiq-sdk-manager-linux.zip" \
+    && unzip -q "/connectiq-sdk-manager-linux.zip" \
     && chmod -R go-w "/opt/connectiq-sdk-manager-linux"
 
 ## SDK
-FROM ubuntu:focal AS sdk
+FROM ubuntu:jammy AS sdk
 
 ARG CIQ_SDK_UID=1000
 ARG CIQ_SDK_GID=1000
@@ -39,14 +39,14 @@ ARG EULA_ACCEPT_MSCOREFONTS="false"
 ENV DEBIAN_FRONTEND=noninteractive
 
 RUN apt-get update --quiet \
+    && apt-get upgrade --yes \
     && apt-get install --no-install-recommends --yes \
        # House keeping
        sudo \
        ca-certificates \
-       # SDK manager
+       # SDK / SDK manager
        libatk1.0-0 \
        libcairo2 \
-       libcurl4 \
        libexpat1 \
        libfontconfig1 \
        libfreetype6 \
@@ -66,13 +66,17 @@ RUN apt-get update --quiet \
        libx11-6 \
        libxext6 \
        libxxf86vm1 \
+       # SDK manager
+       libcurl4 \
        # SDK
        libusb-1.0-0 \
-       libwebkitgtk-1.0-0 \
-       openjdk-8-jdk \
+       openjdk-17-jdk \
        # developer env
        make \
        jq \
+       vim-tiny \
+       less \
+       coreutils \
     && apt-get clean \
     && rm -rf /var/cache/apt/* /var/lib/apt/lists/* \
     # User/group
