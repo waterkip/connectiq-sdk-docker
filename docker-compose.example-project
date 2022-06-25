@@ -19,6 +19,7 @@ services:
       MY_PROJECT: YourProject
       CIQ_API: 3.2.6
       CIQ_TYPECHECK: 0
+      DESTDIR: /path/to/garmin/watch/GARMIN/App
 
 networks:
   default:
