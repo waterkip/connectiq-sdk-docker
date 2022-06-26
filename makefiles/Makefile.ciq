@@ -98,7 +98,7 @@ run-release: ${OUTPUT_RELEASE} | ${CIQ_SIMULATOR} ${CIQ_MONKEYDO}
 test: ${OUTPUT_TEST} | ${CIQ_SIMULATOR} ${CIQ_MONKEYDO}
 	${CIQ_SIMULATOR} &
 	${CIQ_MONKEYDO} ${OUTPUT_TEST} ${CIQ_DEVICE} -t
-	pkill ${CIQ_SIMULATOR}
+	pkill simulator
 
 ## FIT-file viewer
 .PHONY: fit-view
