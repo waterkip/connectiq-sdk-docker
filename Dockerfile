@@ -77,6 +77,9 @@ RUN apt-get update --quiet \
        vim-tiny \
        less \
        coreutils \
+       binutils \
+       file \
+       patch \
     && apt-get clean \
     && rm -rf /var/cache/apt/* /var/lib/apt/lists/* \
     # User/group
