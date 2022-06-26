@@ -1,0 +1,68 @@
+#
+# SPDX-FileCopyrightText: 2017-2022 Cédric Dufour <http://cedric.dufour.name>
+# SPDX-FileCopyrightText: 2022 Wesley Schwengle <wesley@opperschaap.net>
+#
+# SPDX-License-Identifier: Unlicense
+#
+## ConnectIQ resources
+include /etc/garmin-connectiq/Makefile.base
+
+## Project resources
+ifndef MY_RESOURCES
+MY_RESOURCES := $(shell find -L resources* -name '*.xml')
+endif
+
+ifndef MY_SOURCES
+MY_SOURCES := $(shell find -L source -name '*.mc')
+endif
+
+## Help
+.PHONY: help
+help:
+	@echo 'Targets:'
+	@echo '  ciq-help    - display the build environment help'
+	@echo '  help        - display this help message'
+	@echo '  barrel      - build the barrel (*.barrel; excluding debug symbols)'
+	@echo '  test        - test the barrel (*.barrel; excluding debug symbols)'
+	@echo '  clean       - delete all build output'
+.DEFAULT_GOAL := help
+
+
+## Build
+OUTPUT_BUILD := ./bin/${MY_PROJECT}.barrel
+${OUTPUT_BUILD}: ${MY_MANIFEST} ${MY_RESOURCES} ${MY_SOURCES} | ${CIQ_MONKEYC} ${CIQ_DEVKEY}
+	mkdir -p bin
+	${CIQ_MONKEYBARREL} -w -l ${CIQ_TYPECHECK} \
+	  -o $@ \
+	  -f ${MY_JUNGLES}
+barrel: ${OUTPUT_BUILD}
+
+# test
+OUTPUT_TEST := ./bin/${CIQ_DEVICE}-${MY_PROJECT}-${CIQ_API}.test.barrel
+${OUTPUT_TEST}: ${MY_MANIFEST} ${MY_RESOURCES} ${MY_SOURCES} | ${CIQ_MONKEYC} ${CIQ_DEVKEY}
+	mkdir -p bin
+	${CIQ_BARRELTEST} -w -l ${CIQ_TYPECHECK} \
+	  -o $@ \
+	  -d ${CIQ_DEVICE} \
+	  -c ${CIQ_API} \
+	  -y ${CIQ_DEVKEY} \
+	  -f ${MY_JUNGLES}
+release: ${OUTPUT_TEST}
+
+## Test
+.PHONEY: test
+test: ${OUTPUT_TEST} | ${CIQ_SIMULATOR} ${CIQ_MONKEYDO}
+	${CIQ_SIMULATOR} &
+	${CIQ_MONKEYDO} ${OUTPUT_TEST} ${CIQ_DEVICE} -t
+	pkill ${CIQ_SIMULATOR}
+
+## Clean
+.PHONY: clean
+clean:
+	if [ -f bin/.keep ]; then \
+		rm -rf bin ;\
+		mkdir bin ;\
+		touch bin/.keep ;\
+	else \
+		rm -rf bin;\
+	fi \

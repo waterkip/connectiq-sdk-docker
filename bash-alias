@@ -7,7 +7,8 @@ GC_HOME="$HOME/.Garmin/ConnectIQ"
 GC_SDK="$GC_HOME/current-sdk.cfg"
 
 
-for i in monkeydo barrelbuild connectiq era mdd monkeyc monkeydoc monkeygraph monkeym shell simulator
+for i in monkeydo barrelbuild barreltest connectiq era mdd monkeyc monkeydoc\
+  monkeygraph monkeym shell simulator
 do
   [ -f "$GC_SDK" ] && alias $i="$(cat "$GC_SDK")bin/$i"
 done

@@ -91,13 +91,14 @@ run-debug: ${OUTPUT_DEBUG} | ${CIQ_SIMULATOR} ${CIQ_MONKEYDO}
 run-release: ${OUTPUT_RELEASE} | ${CIQ_SIMULATOR} ${CIQ_MONKEYDO}
 	${CIQ_SIMULATOR} & sleep 1
 	${CIQ_MONKEYDO} ${OUTPUT_RELEASE} ${CIQ_DEVICE}
+	pkill ${CIQ_SIMULATOR}
 
 ## Test
 .PHONEY: test
 test: ${OUTPUT_TEST} | ${CIQ_SIMULATOR} ${CIQ_MONKEYDO}
 	${CIQ_SIMULATOR} &
 	${CIQ_MONKEYDO} ${OUTPUT_TEST} ${CIQ_DEVICE} -t
-	pkill simulator
+	pkill ${CIQ_SIMULATOR}
 
 ## FIT-file viewer
 .PHONY: fit-view

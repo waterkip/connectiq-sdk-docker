@@ -30,6 +30,15 @@ ifndef CIQ_MONKEYDO
 CIQ_MONKEYDO := ${CIQ_ROOT}/bin/monkeydo
 endif
 
+# barrel builder
+ifndef CIQ_MONKEYBARREL
+CIQ_MONKEYBARREL=${CIQ_ROOT}/bin/barrelbuild
+endif
+
+ifndef CIQ_BARRELTEST
+CIQ_BARRELTEST=${CIQ_ROOT}/bin/barreltest
+endif
+
 # FIT-file viewer
 ifndef CIQ_MONKEYGRAPH
 CIQ_MONKEYGRAPH := ${CIQ_ROOT}/bin/fit-graph.jar
@@ -108,9 +117,10 @@ ciq-help:
 	@echo '  CIQ_MONKEYC     = ${CIQ_MONKEYC}'
 	@echo '  CIQ_SIMULATOR   = ${CIQ_SIMULATOR}'
 	@echo '  CIQ_MONKEYDO    = ${CIQ_MONKEYDO}'
+	@echo '  CIQ_MONKEYBARREL= ${CIQ_MONKEYBARREL}'
+	@echo '  CIQ_BARRELTEST  = ${CIQ_BARRELTEST}'
 	@echo '  CIQ_MONKEYGRAPH = ${CIQ_MONKEYGRAPH}'
 	@echo '  CIQ_API         = ${CIQ_API}'
 	@echo '  CIQ_DEVICE      = ${CIQ_DEVICE}'
 	@echo '  CIQ_DEVKEY      = ${CIQ_DEVKEY}'
 	@echo '  CIQ_FITFILE     = ${CIQ_FITFILE}'
-	@echo '  CIQ_TYPECHECK   = ${CIQ_TYPECHECK}'
