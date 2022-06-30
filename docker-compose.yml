@@ -6,9 +6,7 @@
 version: '3.6'
 services:
   reuse:
-    image: fsfe/reuse:latest
-    command:
-      - lint
+    image: registry.gitlab.com/opndev/docker/opndev-reuse:latest
     volumes:
       - ./:/data
 
