@@ -96,7 +96,7 @@ run-release: ${OUTPUT_RELEASE} | ${CIQ_SIMULATOR} ${CIQ_MONKEYDO}
 ## Test
 .PHONEY: test
 test: ${OUTPUT_TEST} | ${CIQ_SIMULATOR} ${CIQ_MONKEYDO}
-	${CIQ_SIMULATOR} &
+	${CIQ_SIMULATOR} 1>/dev/null &
 	${CIQ_MONKEYDO} ${OUTPUT_TEST} ${CIQ_DEVICE} -t
 	pkill simulator
 
