@@ -100,6 +100,14 @@ make iq
 make ciq-devices
 ```
 
+## Changing the current SDK
+
+You can change the SDK via the normal Garmin way, after you have done this you
+should issue `setCurrentSDK` in your shell. This will update the symlink that
+is used by the Makefiles and will make sure you can run all the commands that
+are provided by the SDK. See the `$PATH` environment variable to where this
+symlink exists.
+
 ## docker-compose
 
 This project can also build the image via docker-compose, simply run
