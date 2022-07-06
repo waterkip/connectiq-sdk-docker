@@ -23,5 +23,4 @@ function setCurrentSDK() {
 
 }
 
-export PATH=$GC_HOME/Sdks/current/bin:$PATH
 setCurrentSDK
