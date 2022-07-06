@@ -3,12 +3,25 @@
 #
 # SPDX-License-Identifier: Unlicense
 #
-GC_HOME="$HOME/.Garmin/ConnectIQ"
-GC_SDK="$GC_HOME/current-sdk.cfg"
 
+export GC_HOME="$HOME/.Garmin/ConnectIQ"
+export GC_SDK="$GC_HOME/current-sdk.cfg"
 
-for i in monkeydo barrelbuild barreltest connectiq era mdd monkeyc monkeydoc\
-  monkeygraph monkeym shell simulator
-do
-  [ -f "$GC_SDK" ] && alias $i="$(cat "$GC_SDK")bin/$i"
-done
+function setCurrentSDK() {
+  local SDK_HOME="$GC_HOME/Sdks"
+  local s=$(realpath $(cat "$GC_SDK"))
+  local current="$SDK_HOME/current"
+  local rel_cur=$(realpath -m --relative-to="$SDK_HOME" "$current")
+  local rel_s=$(realpath --relative-to="$SDK_HOME" $(cat "$GC_HOME/current-sdk.cfg"))
+
+  if [ -L "$current" ]
+  then
+    [ "$rel_cur" == "$rel_s" ] && return;
+    rm "$current"
+  fi
+  (cd $SDK_HOME && ln -s "$rel_s" current)
+
+}
+
+export PATH=$GC_HOME/Sdks/current/bin:$PATH
+setCurrentSDK
