@@ -40,7 +40,7 @@ endif
 
 # FIT-file viewer
 ifndef CIQ_MONKEYGRAPH
-CIQ_MONKEYGRAPH := fit-graph.jar
+CIQ_MONKEYGRAPH := ${GC_HOME}/Sdks/current/bin/fit-graph.jar
 endif
 
 # Target API version
@@ -59,7 +59,7 @@ endif
 
 # FIT-file
 ifndef CIQ_FITFILE
-CIQ_FITFILE := ${HOME}/src/.session.fit
+CIQ_FITFILE := ${HOME}/src/session.fit
 endif
 
 
