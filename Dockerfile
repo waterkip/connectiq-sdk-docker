@@ -87,6 +87,7 @@ RUN apt-get update --quiet \
        binutils \
        file \
        patch \
+       git \
     && apt-get clean \
     && rm -rf /var/cache/apt/* /var/lib/apt/lists/* \
     # User/group
