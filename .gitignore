@@ -4,3 +4,4 @@
 # SPDX-License-Identifier: Unlicense
 #
 /.env
+/docker-compose.override.yml
