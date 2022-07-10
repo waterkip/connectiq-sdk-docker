@@ -1,5 +1,5 @@
 #
-# SPDX-FileCopyrightText: 2022 Wesley Schwengle <wesley@opperschaap.net>
+# SPDX-FileCopyrightText: 2022 Wesley Schwengle <wesleys@opperschaap.net>
 #
 # SPDX-License-Identifier: Unlicense
 #

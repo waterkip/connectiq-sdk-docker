@@ -1,6 +1,6 @@
 #
 # SPDX-FileCopyrightText: 2017-2022 Cédric Dufour <http://cedric.dufour.name>
-# SPDX-FileCopyrightText: 2022 Wesley Schwengle <wesley@opperschaap.net>
+# SPDX-FileCopyrightText: 2022 Wesley Schwengle <wesleys@opperschaap.net>
 #
 # SPDX-License-Identifier: Unlicense
 #
