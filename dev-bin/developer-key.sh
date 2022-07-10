@@ -6,8 +6,7 @@
 KEY_DIR="$HOME/.Garmin/ConnectIQ"
 mkdir -p "$KEY_DIR"
 
-PEM="$KEY_DIR/developer.pem"
-DER="$KEY_DIR/$(basename $PEM .pem).der"
+DER="$KEY_DIR/developer.der"
 
 if [ -f "$DER" ]
 then
@@ -15,6 +14,7 @@ then
   exit 1;
 fi
 
+PEM="$(mktemp)"
 openssl genrsa -out $PEM 4096
 openssl pkcs8 -topk8 -nocrypt -inform PEM -outform DER -in  $PEM -out $DER
 rm -f $PEM
