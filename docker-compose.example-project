@@ -12,6 +12,12 @@ services:
       - $HOME/.Xauthority:/home/ciq/.Xauthority:ro
       - $HOME/.Garmin/ConnectIQ:/home/ciq/.Garmin/ConnectIQ
       - ./:/home/ciq/src
+      # The following options are yours to choose in order to make use of the
+      # Gnome keyring options
+      # Keep your .local for the container in your Garmin folder..
+      - $HOME/.Garmin/ConnectIQ/.local:/home/ciq/.local
+      # Or share your own homedir's .local with the container:
+      # - $HOME/.local:/home/ciq/.local
     environment:
       DISPLAY: $DISPLAY
       XAUTHORITY: /home/ciq/.Xauthority

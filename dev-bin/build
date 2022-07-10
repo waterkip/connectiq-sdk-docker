@@ -5,7 +5,7 @@
 # SPDX-License-Identifier: Unlicense
 #
 
-mkdir -p $HOME/.Garmin/ConnectIQ
+mkdir -p $HOME/.Garmin/ConnectIQ/.local
 
 echo "$@" | grep -Eq -- "-t|--tags"
 [ $? -ne 0 ] && ARGS="-t connectiq-sdk:latest"
