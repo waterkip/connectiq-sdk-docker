@@ -115,6 +115,7 @@ CMD /bin/bash
 USER _ciq
 WORKDIR /home/ciq/src
 ENV PATH=/home/ciq/.Garmin/ConnectIQ/Sdks/current/bin:$PATH
+ENV NO_AT_BRIDGE=1
 
 # Font editor
 #FROM sdk as hiero
