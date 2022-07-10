@@ -106,7 +106,6 @@ RUN apt-get update --quiet \
 COPY --from=installer /opt/connectiq-sdk-manager-linux /opt/connectiq-sdk-manager-linux
 COPY makefiles/Makefile.* /etc/garmin-connectiq/
 COPY bash-alias /home/ciq/.bash_aliases
-COPY dbus.conf /etc/dbus-1/session.d/
 COPY entrypoint.sh /entrypoint.sh
 
 ENTRYPOINT ["/entrypoint.sh"]
