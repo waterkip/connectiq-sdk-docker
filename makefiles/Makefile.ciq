@@ -84,11 +84,13 @@ iq: ${OUTPUT_IQ}
 ## Simulator
 .PHONY: run-debug
 run-debug: ${OUTPUT_DEBUG} | ${CIQ_SIMULATOR} ${CIQ_MONKEYDO}
-	${CIQ_SIMULATOR} & sleep 1
+	pkill ${CIQ_SIMULATOR} || true
+	${CIQ_SIMULATOR} | grep -v "Unable to connect to an ANT device; no devices available" & sleep 1
 	${CIQ_MONKEYDO} ${OUTPUT_DEBUG} ${CIQ_DEVICE}
 
 .PHONY: run-release
 run-release: ${OUTPUT_RELEASE} | ${CIQ_SIMULATOR} ${CIQ_MONKEYDO}
+	pkill ${CIQ_SIMULATOR} || true
 	${CIQ_SIMULATOR} & sleep 1
 	${CIQ_MONKEYDO} ${OUTPUT_RELEASE} ${CIQ_DEVICE}
 	pkill ${CIQ_SIMULATOR}
@@ -96,7 +98,8 @@ run-release: ${OUTPUT_RELEASE} | ${CIQ_SIMULATOR} ${CIQ_MONKEYDO}
 ## Test
 .PHONEY: test
 test: ${OUTPUT_TEST} | ${CIQ_SIMULATOR} ${CIQ_MONKEYDO}
-	${CIQ_SIMULATOR} 1>/dev/null &
+	pkill ${CIQ_SIMULATOR}
+	${CIQ_SIMULATOR} 1>/dev/null & sleep 1
 	${CIQ_MONKEYDO} ${OUTPUT_TEST} ${CIQ_DEVICE} -t
 	pkill simulator
 
