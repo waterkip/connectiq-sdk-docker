@@ -73,6 +73,10 @@ RUN apt-get update --quiet \
        # SDK
        libusb-1.0-0 \
        openjdk-17-jdk \
+       # gliv installs the following and you don't get the pixbuf error. Figure
+       # out which one it is and go from there
+       # libgail-common libgail18 libglu1-mesa libgtk2.0-0 libgtk2.0-bin libgtk2.0-common libgtkglext1 librsvg2-2 librsvg2-common libxmu6 libxt6
+       gliv \
        # developer env
        make \
        jq \
