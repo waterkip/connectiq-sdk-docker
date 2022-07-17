@@ -18,6 +18,8 @@ services:
       args:
         CIQ_SDK_UID: $CIQ_SDK_UID
         CIQ_SDK_GID: $CIQ_SDK_GID
+    devices:
+      - /dev/dri:/dev/dri
     environment:
       DISPLAY: $DISPLAY
       XAUTHORITY: /home/ciq/.Xauthority

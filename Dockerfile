@@ -73,8 +73,9 @@ RUN apt-get update --quiet \
        # SDK
        libusb-1.0-0 \
        openjdk-17-jdk \
-       #mate-themes \
+       mate-themes \
        gtk2-engines-pixbuf \
+       mesa-utils \
        # developer env
        make \
        jq \
