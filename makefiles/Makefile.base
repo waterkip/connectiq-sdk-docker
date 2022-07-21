@@ -6,6 +6,16 @@
 #
 ## ConnectIQ resources
 
+## Project resources
+ifndef MY_RESOURCES
+MY_RESOURCES := $(shell find -L . -name \*.xml -path "./resources*/*")
+endif
+
+ifndef MY_SOURCES
+MY_SOURCES := $(shell find -L . -name '*.mc')
+endif
+
+
 ifndef MY_JUNGLES
 MY_JUNGLES := ${HOME}/src/monkey.jungle
 endif

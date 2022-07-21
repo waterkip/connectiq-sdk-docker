@@ -7,15 +7,6 @@
 ## ConnectIQ resources
 include /etc/garmin-connectiq/Makefile.base
 
-## Project resources
-ifndef MY_RESOURCES
-MY_RESOURCES := $(shell find -L resources* -name '*.xml')
-endif
-
-ifndef MY_SOURCES
-MY_SOURCES := $(shell find -L source -name '*.mc')
-endif
-
 ## Help
 .PHONY: help
 help:
