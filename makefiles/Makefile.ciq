@@ -89,10 +89,13 @@ run-release: ${OUTPUT_RELEASE} | ${CIQ_SIMULATOR} ${CIQ_MONKEYDO}
 ## Test
 .PHONEY: test
 test: ${OUTPUT_TEST} | ${CIQ_SIMULATOR} ${CIQ_MONKEYDO}
+	export DISPLAY_OLD=${DISPLAY}
+	DISPLAY=:1 Xvfb ":1" -screen 0 1280x1024x24 &
 	pkill ${CIQ_SIMULATOR} || true
-	${CIQ_SIMULATOR} 1>/dev/null & sleep 1
+	DISPLAY=:1 ${CIQ_SIMULATOR} 1>/dev/null & sleep 1
 	${CIQ_MONKEYDO} ${OUTPUT_TEST} ${CIQ_DEVICE} -t
 	pkill simulator
+	pkill Xvfb
 
 ## FIT-file viewer
 .PHONY: fit-view

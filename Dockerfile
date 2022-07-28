@@ -46,6 +46,8 @@ RUN apt-get update --quiet \
        ca-certificates \
        gnome-keyring \
        dbus \
+       # be able to test headless
+       xvfb \
        # SDK / SDK manager
        libatk1.0-0 \
        libcairo2 \
